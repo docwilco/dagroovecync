@@ -1,0 +1,27 @@
+{
+    "manifest_version": 2,
+    "name": "DaGrooveCync",
+    "version": "0.1.0",
+    "description": "Groove with your friends: sync up listening to the same stuff on YouTube, MixCloud, and SoundCloud.",
+    "permissions": [
+        "activeTab",
+        "clipboardWrite"
+    ],
+    "icons": {
+        "16": "icons/dgc-16.png",
+        "48": "icons/dgc-48.png",
+        "128": "icons/dgc-128.png"
+    },
+    "background": {
+        "scripts": ["dagroovecync.js"]
+    },
+    "page_action": {
+        "default_icon": {
+            "16": "icons/dgc-16.png",
+            "48": "icons/dgc-48.png",
+            "128": "icons/dgc-128.png"
+        },
+        "default_title": "DaGrooveSync",
+        "show_matches": ["https://*.youtube.com/*", "https://*.soundcloud.com/*", "https://*.mixcloud.com/*"]
+    }
+}
