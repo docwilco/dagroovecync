@@ -12,3 +12,7 @@ Note: make sure your clock is synced! If your clock is off, it will affect how w
 Note 2: Currently MixCloud isn't quite working yet, because they don't support having a timestamp in the URL, but I hope to fix that by serving a page with a widget in the near future.
 
 How it works: when you hit the button, the URL of the currently playing video/audio is extracted, along with the current timestamp. The plugin then calculates a "zero" time by subtracting the current timestamp from the current time according to your clock. That zero time and the URL are encoded into the URL you can share. When someone clicks on the URL, the server will subtract the zero time from the current time, and append to the URL the difference so that the music will start playing at that offset.
+
+# Credits
+
+Thanks Martijn Bogaard for the icons!
