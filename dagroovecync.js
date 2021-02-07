@@ -20,3 +20,32 @@ browser.pageAction.onClicked.addListener((tab) => {
             });
     }
 });
+
+if (chrome.declarativeContent !== undefined) {
+    chrome.runtime.onInstalled.addListener(function() {
+        chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+            chrome.declarativeContent.onPageChanged.addRules([{
+                conditions: [
+                    new chrome.declarativeContent.PageStateMatcher({
+                        pageUrl: { hostSuffix: 'youtube.com' },
+                    })
+                ],
+                actions: [new chrome.declarativeContent.ShowPageAction()]
+            }, {
+                conditions: [
+                    new chrome.declarativeContent.PageStateMatcher({
+                        pageUrl: { hostSuffix: 'soundcloud.com' },
+                    })
+                ],
+                actions: [new chrome.declarativeContent.ShowPageAction()]
+            }, {
+                conditions: [
+                    new chrome.declarativeContent.PageStateMatcher({
+                        pageUrl: { hostSuffix: 'mixcloud.com' },
+                    })
+                ],
+                actions: [new chrome.declarativeContent.ShowPageAction()]
+            }]);
+        });
+    });
+}
