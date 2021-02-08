@@ -13,6 +13,10 @@ Note 2: Currently MixCloud isn't quite working yet, because they don't support h
 
 How it works: when you hit the button, the URL of the currently playing video/audio is extracted, along with the current timestamp. The plugin then calculates a "zero" time by subtracting the current timestamp from the current time according to your clock. That zero time and the URL are encoded into the URL you can share. When someone clicks on the URL, the server will subtract the zero time from the current time, and append to the URL the difference so that the music will start playing at that offset.
 
+# Installing
+
+Firefox: https://addons.mozilla.org/firefox/addon/dagroovecync/
+
 # Credits
 
 Thanks Martijn Bogaard for the icons!
