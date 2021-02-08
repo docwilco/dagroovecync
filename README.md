@@ -15,7 +15,22 @@ How it works: when you hit the button, the URL of the currently playing video/au
 
 # Installing
 
-Firefox: https://addons.mozilla.org/firefox/addon/dagroovecync/
+## From browser marketplaces
+
+### Firefox
+https://addons.mozilla.org/firefox/addon/dagroovecync/
+
+## Manually
+
+### Firefox
+Download the latest XPI from https://github.com/docwilco/dagroovecync/releases, then go to `about:debugging`, click This Firefox and add as a temporary plugin.
+
+### Chrome
+Downloud the latest source from https://github.com/docwilco/dagroovecync/releases, unpack and use "load unpacked" under "manage extensions".
+
+# Building
+
+Throw everything except `.git` and SVG files into a zip file and change the extension from `zip` to `xpi`.
 
 # Credits
 
