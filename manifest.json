@@ -7,7 +7,7 @@
         "tabs",
         "clipboardWrite",
         "declarativeContent",
-        "https://*.youtube.com/*",
+        "https://*.youtube.com/watch*",
         "https://*.soundcloud.com/*",
         "https://*.mixcloud.com/*"
     ],
@@ -28,7 +28,7 @@
             "32": "icons/button-32.png",
             "38": "icons/button-38.png"
         },
-        "default_title": "DaGrooveSync",
+        "default_title": "DaGrooveCync",
         "show_matches": ["https://*.youtube.com/watch*", "https://*.soundcloud.com/*", "https://*.mixcloud.com/*"]
     }
 }
