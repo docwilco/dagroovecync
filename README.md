@@ -20,6 +20,9 @@ How it works: when you hit the button, the URL of the currently playing video/au
 ### Firefox
 https://addons.mozilla.org/firefox/addon/dagroovecync/
 
+### Chrome
+https://chrome.google.com/webstore/detail/dagroovecync/inkjphjnkcigofagibfjfnhilnklgemj
+
 ## Manually
 
 ### Firefox
