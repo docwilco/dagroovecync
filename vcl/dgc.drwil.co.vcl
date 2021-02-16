@@ -1,7 +1,27 @@
 sub vcl_recv {
+  declare local var.time INTEGER;
+  declare local var.site STRING;
+  declare local var.path STRING;
+  declare local var.location STRING;
+  if (req.url.path ~ "/v2/([0-9]{6})/([^/]+)(/.*)$") {
+    set var.site = re.group.2;
+    set var.path = re.group.3;
+    # 6 digits covers 278ish hours, so that should be plenty.
+    set var.time = now;
+    set var.time -= std.atoi(re.group.1);
+    set var.time %= 1000000;
+    if (var.site == "soundcloud") {
+      set var.location = "https://soundcloud.com" + var.path;
+      error 302 var.location;
+    } else if (var.site == "mixcloud") {
+      set req.http.time = var.time;
+      error 200 var.path;
+    } else if (var.site == "youtube") {
+      set var.location = "https://www.youtube.com/watch?" + req.url.qs;
+      error 302 var.location;
+    }
+  }
   if (req.url.path ~ "/v1/([0-9]+)/(.*)") {
-    declare local var.time INTEGER;
-    declare local var.location STRING;
     set var.time = now;
     set var.time -= std.atoi(re.group.1);
     # Usually takes at least a second to load stuff
