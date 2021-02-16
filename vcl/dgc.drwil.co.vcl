@@ -3,7 +3,7 @@ sub vcl_recv {
   declare local var.site STRING;
   declare local var.path STRING;
   declare local var.location STRING;
-  if (req.url.path ~ "/v2/([0-9]{6})/([^/]+)(/.*)$") {
+  if (req.url.path ~ "/v2/([0-9]{6})/([^/]+)(/.*)?$") {
     set var.site = re.group.2;
     set var.path = re.group.3;
     # 6 digits covers 278ish hours, so that should be plenty.
