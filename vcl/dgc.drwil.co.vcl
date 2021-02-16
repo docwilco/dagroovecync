@@ -11,13 +11,13 @@ sub vcl_recv {
     set var.time -= std.atoi(re.group.1);
     set var.time %= 1000000;
     if (var.site == "soundcloud") {
-      set var.location = "https://soundcloud.com" + var.path;
+      set var.location = "https://soundcloud.com" + var.path + "#t=" + var.time;
       error 302 var.location;
     } else if (var.site == "mixcloud") {
       set req.http.time = var.time;
       error 200 var.path;
     } else if (var.site == "youtube") {
-      set var.location = "https://www.youtube.com/watch?" + req.url.qs;
+      set var.location = "https://www.youtube.com/watch?" + req.url.qs + "#t=" + var.time;
       error 302 var.location;
     }
   }
