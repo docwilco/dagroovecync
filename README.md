@@ -33,8 +33,8 @@ Downloud the latest source from https://github.com/docwilco/dagroovecync/release
 
 # Building
 
-Throw everything except `.git` and SVG files into a zip file and change the extension from `zip` to `xpi`.
+Throw everything under `extension` into zip file and change the extension from `zip` to `xpi`.
 
 # Credits
 
-Thanks Martijn Bogaard for the icons!
+Thanks Martijn Bogaard for the icons, motivation and ideas!
