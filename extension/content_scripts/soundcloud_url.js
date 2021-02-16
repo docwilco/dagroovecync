@@ -24,7 +24,13 @@
         });
         var zero = now - Math.round(currentSecs);
 
-        url = "https://dgc.drwil.co/v1/" + zero + "/" + encodeURIComponent(url.toString().split('#')[0]);
+        if (url.host == "soundcloud.com") {
+            zero %= 1000000;
+            url = "https://dgc.drwil.co/v2/" + zero + "/soundcloud" + url.pathname;
+        } else {
+            url = "https://dgc.drwil.co/v1/" + zero + "/" + encodeURIComponent(url.toString().split('#')[0]);
+        }
+
         navigator.clipboard.writeText(url);
         /*
          * Chrome is unable to throw an error from here to the caller of executeScript,

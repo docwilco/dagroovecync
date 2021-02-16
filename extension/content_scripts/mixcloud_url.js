@@ -15,7 +15,13 @@
          */
         var zero = now - Math.round(htmlAudioPlayer.currentTime);
 
-        url = "https://dgc.drwil.co/v1/" + zero + "/" + encodeURIComponent(url.toString().split('#')[0]);
+        if (url.host == "www.mixcloud.com") {
+            zero %= 1000000;
+            url = "https://dgc.drwil.co/v2/" + zero + "/mixcloud" + url.pathname;
+        } else {
+            url = "https://dgc.drwil.co/v1/" + zero + "/" + encodeURIComponent(url.toString().split('#')[0]);
+        }
+
         navigator.clipboard.writeText(url);
         /*
          * Chrome is unable to throw an error from here to the caller of executeScript,
