@@ -22,7 +22,7 @@ sub vcl_recv {
       set var.location = "https://www.youtube.com/watch?" + req.url.qs + "#t=" + var.time;
       error 302 var.location;
     } else if (var.site == "twitch") {
-      set var.location = "https://twitch.tv/videos" + var.path + "?t=" + var.time + "s";
+      set var.location = "https://www.twitch.tv/videos" + var.path + "?t=" + var.time + "s";
       error 302 var.location;
     }
   }

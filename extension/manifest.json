@@ -8,7 +8,7 @@
         "clipboardWrite",
         "declarativeContent",
         "https://*.youtube.com/watch*",
-        "https://twitch.tv/videos*",
+        "https://*.twitch.tv/videos*",
         "https://*.soundcloud.com/*",
         "https://*.mixcloud.com/*"
     ],
@@ -32,7 +32,7 @@
         "default_title": "DaGrooveCync",
         "show_matches": [
             "https://*.youtube.com/watch*",
-            "https://twitch.tv/videos*",
+            "https://*.twitch.tv/videos*",
             "https://*.soundcloud.com/*",
             "https://*.mixcloud.com/*"
         ]

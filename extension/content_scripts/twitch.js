@@ -19,12 +19,12 @@
          */
         zero = now - Math.round(htmlVideoPlayer.currentTime);
 
-        if (url.host == "twitch.tv" && url.pathname.startsWith("/videos")) {
+        if ((url.host == "twitch.tv" || url.host == "www.twitch.tv") && url.pathname.startsWith("/videos")) {
             zero %= 1000000;
             /* slice(7) to chop off /videos */
             url = "https://dgc.drwil.co/v2/" + zero + "/twitch" + url.pathname.slice(7);
         } else {
-            return `error: URL does not start with twitch.tv/videos`;
+            return `error: URL does not start with (www.)twitch.tv/videos`;
         }
         navigator.clipboard.writeText(url);
         /*
