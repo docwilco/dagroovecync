@@ -3,12 +3,14 @@ sub vcl_recv {
   declare local var.site STRING;
   declare local var.path STRING;
   declare local var.location STRING;
-  if (req.url.path ~ "/v2/([0-9]{6})/([^/]+)(/.*)?$") {
+  if (req.url.path ~ "/v2/([0-9]{1,6})/([^/]+)(/.*)?$") {
     set var.site = re.group.2;
     set var.path = re.group.3;
     # 6 digits covers 278ish hours, so that should be plenty.
     set var.time = now;
     set var.time -= std.atoi(re.group.1);
+    # Usually takes at least a second to load stuff
+    set var.time += 1;
     set var.time %= 1000000;
     if (var.site == "soundcloud") {
       set var.location = "https://soundcloud.com" + var.path + "#t=" + var.time;
@@ -18,6 +20,9 @@ sub vcl_recv {
       error 200 var.path;
     } else if (var.site == "youtube") {
       set var.location = "https://www.youtube.com/watch?" + req.url.qs + "#t=" + var.time;
+      error 302 var.location;
+    } else if (var.site == "twitch") {
+      set var.location = "https://twitch.tv/videos" + var.path + "?t=" + var.time + "s";
       error 302 var.location;
     }
   }
@@ -33,6 +38,9 @@ sub vcl_recv {
     }
     set var.location = var.location + "#t=" + var.time;
     error 302 var.location;
+  }
+  if (req.url.path ~ "/") {
+    error 302 "https://github.com/docwilco/dagroovecync";
   }
   error 404;
   #FASTLY recv

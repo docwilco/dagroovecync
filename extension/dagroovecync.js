@@ -38,6 +38,8 @@ browser.pageAction.onClicked.addListener((tab) => {
     var file;
     if (url.host.endsWith("youtube.com")) {
         file = "youtube_url.js";
+    } else if (url.host.endsWith("twitch.tv")) {
+        file = "twitch.js";
     } else if (url.host.endsWith("mixcloud.com")) {
         file = "mixcloud_url.js";
     } else if (url.host.endsWith("soundcloud.com")) {
@@ -70,6 +72,9 @@ if (chrome.declarativeContent !== undefined) {
                 conditions: [
                     new chrome.declarativeContent.PageStateMatcher({
                         pageUrl: { hostSuffix: 'youtube.com', pathPrefix: '/watch' },
+                    }),
+                    new chrome.declarativeContent.PageStateMatcher({
+                        pageUrl: { hostSuffix: 'twitch.tv', pathPrefix: '/videos' },
                     }),
                     new chrome.declarativeContent.PageStateMatcher({
                         pageUrl: { hostSuffix: 'soundcloud.com' },

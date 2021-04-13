@@ -1,13 +1,14 @@
 {
     "manifest_version": 2,
     "name": "DaGrooveCync",
-    "version": "0.1.4",
-    "description": "Groove with your friends: sync up listening to the same stuff on YouTube, MixCloud, and SoundCloud.",
+    "version": "0.1.5",
+    "description": "Groove with your friends: sync up watching or listening to the same stuff on YouTube, Twitch, MixCloud, and SoundCloud.",
     "permissions": [
         "tabs",
         "clipboardWrite",
         "declarativeContent",
         "https://*.youtube.com/watch*",
+        "https://twitch.tv/videos*",
         "https://*.soundcloud.com/*",
         "https://*.mixcloud.com/*"
     ],
@@ -29,6 +30,11 @@
             "38": "icons/button-38.png"
         },
         "default_title": "DaGrooveCync",
-        "show_matches": ["https://*.youtube.com/watch*", "https://*.soundcloud.com/*", "https://*.mixcloud.com/*"]
+        "show_matches": [
+            "https://*.youtube.com/watch*",
+            "https://twitch.tv/videos*",
+            "https://*.soundcloud.com/*",
+            "https://*.mixcloud.com/*"
+        ]
     }
 }
