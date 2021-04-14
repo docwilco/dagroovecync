@@ -5,19 +5,18 @@
             throw new Error("no video player");
         }
         var url = new URL(htmlVideoPlayer.baseURI);
-        params = new URLSearchParams(url.search);
         /*
          * get rid of query string, since that can have a timing parameter (t) 
          */
         url.search = "";
 
-        now = Math.round(Date.now() / 1000);
+        var now = Math.round(Date.now() / 1000);
         /*
          * `zero` is the time the user would have to have hit play to get
          * to the current time in the video right now, if they hadn't scrubbed
          * through the video at all.
          */
-        zero = now - Math.round(htmlVideoPlayer.currentTime);
+        var zero = now - Math.round(htmlVideoPlayer.currentTime);
 
         if ((url.host == "twitch.tv" || url.host == "www.twitch.tv") && url.pathname.startsWith("/videos")) {
             zero %= 1000000;

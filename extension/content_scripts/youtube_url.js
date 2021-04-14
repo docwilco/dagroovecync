@@ -5,25 +5,25 @@
             throw new Error("no video player");
         }
         var url = new URL(htmlVideoPlayer.baseURI);
-        params = new URLSearchParams(url.search);
         /*
-         * sometimes YouTube URLs have a `t` query string parameter, which
-         * can interfere with what we're trying to do. Get rid of it.
+         * Both the t parameter and the playlist parameters interfere with
+         * what we're trying to do, so removing everything except the v
+         * parameter.
          */
-        params.delete('t')
-        url = new URL("?" + params.toString(), url);
+        var params = new URLSearchParams(url.search);
+        var vid = params.get('v')
 
-        now = Math.round(Date.now() / 1000);
+        var now = Math.round(Date.now() / 1000);
         /*
          * `zero` is the time the user would have to have hit play to get
          * to the current time in the video right now, if they hadn't scrubbed
          * through the video at all.
          */
-        zero = now - Math.round(htmlVideoPlayer.currentTime);
+        var zero = now - Math.round(htmlVideoPlayer.currentTime);
 
         if (url.host == "www.youtube.com" && url.pathname == "/watch") {
             zero %= 1000000;
-            url = "https://dgc.drwil.co/v2/" + zero + "/youtube" + url.search;
+            url = "https://dgc.drwil.co/v2/" + zero + "/youtube?v=" + vid;
         } else {
             url = "https://dgc.drwil.co/v1/" + zero + "/" + encodeURIComponent(url.toString().split('#')[0]);
         }
