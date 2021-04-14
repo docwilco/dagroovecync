@@ -6,7 +6,7 @@ Ever want to listen to a mix on the internet with a friend, and keep having to d
 
 Then this plugin is for you!
 
-For YouTube, MixCloud, and SoundCloud, a button will show up in the URL bar, which will create a URL and put it in your clipboard. You can then paste this URL to your friend and they will get redirected in such a way that they will sync up with you. Well, give or take a second or two, depending on how long the page takes for them to load.
+For YouTube, Twitch, MixCloud, and SoundCloud, a button will show up in the URL bar, which will create a URL and put it in your clipboard. You can then paste this URL to your friend and they will get redirected in such a way that they will sync up with you. Well, give or take a second or two, depending on how long the page takes for them to load.
 
 Note: make sure your clock is synced! If your clock is off, it will affect how well your friends will sync up.
 Note 2: Currently MixCloud isn't quite working yet, because they don't support having a timestamp in the URL, but I hope to fix that by serving a page with a widget in the near future.
