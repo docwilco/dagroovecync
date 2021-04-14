@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "DaGrooveCync",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "description": "Groove with your friends: sync up watching or listening to the same stuff on YouTube, Twitch, MixCloud, and SoundCloud.",
     "permissions": [
         "tabs",

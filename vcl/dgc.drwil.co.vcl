@@ -22,7 +22,18 @@ sub vcl_recv {
       set var.location = "https://www.youtube.com/watch?" + req.url.qs + "#t=" + var.time;
       error 302 var.location;
     } else if (var.site == "twitch") {
-      set var.location = "https://www.twitch.tv/videos" + var.path + "?t=" + var.time + "s";
+      declare local var.hours INTEGER;
+      declare local var.minutes INTEGER;
+      declare local var.seconds INTEGER;
+      set var.hours = var.time;
+      set var.hours /= 3600;
+      set var.minutes = var.time;
+      set var.minutes %= 3600;
+      set var.minutes /= 60;
+      set var.seconds = var.time;
+      set var.seconds %= 60;
+      set var.location = "https://www.twitch.tv/videos" + var.path + "?t="
+                         + var.hours + "h" + var.minutes + "m" + var.seconds + "s"; 
       error 302 var.location;
     }
   }
