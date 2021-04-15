@@ -65,8 +65,13 @@ sub vcl_error {
   }
   if (obj.status == 200) {
     declare local var.url STRING;
+    declare local var.iframe STRING;
     set var.url = obj.response;
     set obj.response = "OK";
+    # Classic widget is 120px height, Picture widget is 400px, but switches
+    # to a < 200px player that's more elaborate than Picture. Autoplay skips
+    # the cover pic, so use 200px to get the elaborate player. 
+    set var.iframe = {"<iframe id="my-widget-iframe" width="100%" height="200" src="https://www.mixcloud.com/widget/iframe/?autoplay=1&feed="} + urlencode(var.url) + {"" frameborder="0" allow="autoplay"></iframe>"};
     synthetic {"
 <html>
 <head>
@@ -86,7 +91,7 @@ an embedded player will have to suffice for now. Please let me know if this has 
 <br>
 <hr>
 <script src="https://widget.mixcloud.com/media/js/widgetApi.js" type="text/javascript"></script>
-<iframe id="my-widget-iframe" width="100%" height="120" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&autoplay=1&feed="} + urlencode(var.url) + {"" frameborder="0" allow="autoplay"></iframe>
+"} + var.iframe + {"
 <hr>
 Remember to allow auto-play if your browser has the capability. If it doesn't, hitting play and then reloading the page might work.
 <script type="text/javascript">
