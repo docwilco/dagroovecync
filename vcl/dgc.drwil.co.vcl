@@ -77,27 +77,113 @@ sub vcl_error {
 <head>
 <title>DaGrooveSync - MixCloud Workaround</title>
 <style>
-body {
-    background-color: #222;
-    color: #e6e6e6;
-    font: 75% Verdana, Arial, Helvetica, sans-serif;
-}
+  body {
+    background: #333;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+  }
+
+  h3 {
+    text-align: center;
+    font-size: 24px;
+    padding-top: 20px;
+    color: #fff;
+  }
+
+  p {
+    color: #ddd;
+    text-align: center;
+    font-size: 15px;
+  }
+
+  #volume-control {
+    width: 350px;
+    height: 50px;
+    position: relative;
+    margin: 0 auto;
+    top: 10px;
+  }
+  #volume-control i {
+    position: absolute;
+    margin-top: -6px;
+    color: #666;
+  }
+  #volume-control i.fa-volume-down {
+    margin-left: -8px;
+  }
+  #volume-control i.fa-volume-up {
+    margin-right: -8px;
+    right: 0;
+  }
+
+  #volume {
+    position: absolute;
+    left: 24px;
+    margin: 0 auto;
+    height: 5px;
+    width: 300px;
+    background: #555;
+    border-radius: 15px;
+  }
+  #volume .ui-slider-range-min {
+    height: 5px;
+    width: 300px;
+    position: absolute;
+    background: #909090;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+  }
+  #volume .ui-slider-handle {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background: #fff;
+    position: absolute;
+    margin-left: -8px;
+    margin-top: -8px;
+    cursor: pointer;
+    outline: none;
+  }
 </style>
 </head>
 <body>
 <h3>DaGrooveCync workaround player</h3>
-Since MixCloud does not have any way to link to mixes on their site with a start time, like YouTube and SoundCloud do,
-an embedded player will have to suffice for now. Please let me know if this has changed!
+<p>Since MixCloud does not have any way to link to mixes on their site with a start time, like YouTube and SoundCloud do,
+an embedded player will have to suffice for now. Please let me know if this has changed!</p>
 <br>
+
 <hr>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+<script src="https://kit.fontawesome.com/287885ebad.js" type="text/javascript"></script>
+
 <script src="https://widget.mixcloud.com/media/js/widgetApi.js" type="text/javascript"></script>
 "} + var.iframe + {"
+<!-- volume control based on https://codepen.io/emilcarlsson/pen/PPNLPy -->
+<div id="volume-control">
+  <i class="fa fa-volume-down"></i>
+  <div id="volume"></div>
+  <i class="fa fa-volume-up"></i>
+</div>
+
 <hr>
-Remember to allow auto-play if your browser has the capability. If it doesn't, hitting play and then reloading the page might work.
+
+<p>Remember to allow auto-play if your browser has the capability. If it doesn't, hitting play and then reloading the page might work.</p>
 <script type="text/javascript">
     var widget = Mixcloud.PlayerWidget(document.getElementById("my-widget-iframe"));
     widget.ready.then(function() {
         widget.seek("} + req.http.time + {");
+        widget.setVolume(0.5);
+    });
+    $("#volume").slider({
+      	min: 0,
+  	    max: 100,
+  	    value: 50,
+		    range: "min",
+  	    slide: function(event, ui) {
+    	      widget.setVolume(ui.value / 100);
+  	    }
     });
 </script>
 </body>
