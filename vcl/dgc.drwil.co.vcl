@@ -21,6 +21,9 @@ sub vcl_recv {
     } else if (var.site == "youtube") {
       set var.location = "https://www.youtube.com/watch?" + req.url.qs + "#t=" + var.time;
       error 302 var.location;
+    } else if (var.site == "ytmusic") {
+      set var.location = "https://music.youtube.com/watch?" + req.url.qs + "&t=" + var.time;
+      error 302 var.location;
     } else if (var.site == "twitch") {
       declare local var.hours INTEGER;
       declare local var.minutes INTEGER;
