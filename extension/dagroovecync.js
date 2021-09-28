@@ -74,6 +74,9 @@ if (chrome.declarativeContent !== undefined) {
                         pageUrl: { hostSuffix: 'youtube.com', pathPrefix: '/watch' },
                     }),
                     new chrome.declarativeContent.PageStateMatcher({
+                        pageUrl: { hostEquals: 'music.youtube.com' },
+                    }),
+                    new chrome.declarativeContent.PageStateMatcher({
                         pageUrl: { hostSuffix: 'twitch.tv', pathPrefix: '/videos' },
                     }),
                     new chrome.declarativeContent.PageStateMatcher({

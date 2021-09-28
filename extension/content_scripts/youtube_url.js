@@ -43,7 +43,12 @@
 
         console.log(`zero: ${zero}  vid: ${vid} url: ${url}`);
         var url;
-        if (docurl.host == "music.youtube.com" && docurl.pathname == "/watch") {
+        /*
+         * Don't look for /watch path on YT music, because the user can be browsing
+         * all sorts of parts of the site while listening, and the URL will reflect
+         * what they're looking at, not what they're listening to.
+         */
+        if (docurl.host == "music.youtube.com") {
             url = "https://dgc.drwil.co/v2/" + zero + "/ytmusic?v=" + vid;
         } else if (docurl.host == "www.youtube.com" && docurl.pathname == "/watch") {
             url = "https://dgc.drwil.co/v2/" + zero + "/youtube?v=" + vid;
