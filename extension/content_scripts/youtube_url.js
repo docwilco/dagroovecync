@@ -16,7 +16,6 @@
             for (element of elements) {
                 try {
                     var titleurl = new URL(element.href);
-                    console.log(`url: ${url}`);
                     var params = new URLSearchParams(titleurl.search);
                     vid = params.get('v');
                     break;
@@ -41,7 +40,6 @@
         var zero = now - Math.round(htmlVideoPlayer.currentTime);
         zero %= 1000000;
 
-        console.log(`zero: ${zero}  vid: ${vid} url: ${url}`);
         var url;
         /*
          * Don't look for /watch path on YT music, because the user can be browsing
