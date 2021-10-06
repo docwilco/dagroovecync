@@ -28,7 +28,7 @@
              * what we're trying to do, so removing everything except the v
              * parameter.
              */
-            var params = new URLSearchParams(url.search);
+            var params = new URLSearchParams(docurl.search);
             vid = params.get('v');
         }
 
