@@ -1,3 +1,4 @@
+// now is set by the background script
 (function() {
     try {
         var titleLink = document.getElementsByClassName("playbackSoundBadge__titleLink")[0];
@@ -5,12 +6,10 @@
             throw new Error("unable to find titleLink");
         }
         var url = new URL(titleLink.href, document.URL);
-
-        var now = Math.round(Date.now() / 1000);
         /*
          * `zero` is the time the user would have to have hit play to get
          * to the current time in the audio right now, if they hadn't scrubbed
-         * through the audio at all.
+         * through the audio at all. `now` is set by the background script.
          */
         var timePassed = document.getElementsByClassName("playbackTimeline__timePassed")[0];
         if (timePassed === undefined) {

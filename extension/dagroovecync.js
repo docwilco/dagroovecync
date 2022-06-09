@@ -47,8 +47,11 @@ browser.pageAction.onClicked.addListener((tab) => {
     } else {
         throw new Error('internal error: unknown site');
     }
-    browser.tabs
-        .executeScript(tab.id, { file: `/content_scripts/${file}` })
+    // Windows doesn't really do accurate clocks, so we need to snag the time first
+    fetch("https://dgc.drwil.co/v2/now")
+        .then(response => response.json())
+        .then((data) => browser.tabs.executeScript(tab.id, { code: `var now = ${data.now};` }))
+        .then(() => browser.tabs.executeScript(tab.id, { file: `/content_scripts/${file}` }))
         .then(result => {
             /*
              * Since Chrome is unable to throw errors from the content script to here,

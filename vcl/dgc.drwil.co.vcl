@@ -3,6 +3,10 @@ sub vcl_recv {
   declare local var.site STRING;
   declare local var.path STRING;
   declare local var.location STRING;
+  if (req.url.path == "/v2/now") {
+    set var.time = now;
+    error 700 var.time;
+  }
   if (req.url.path ~ "/v2/([0-9]{1,6})/([^/]+)(/.*)?$") {
     set var.site = re.group.2;
     set var.path = re.group.3;
@@ -61,6 +65,14 @@ sub vcl_recv {
 }
 
 sub vcl_error {
+  if (obj.status == 700) {
+    set obj.status = 200;
+    set obj.http.Content-Type = "application/json";
+    set obj.http.Access-Control-Allow-Origin = "*";
+    synthetic {"{"now":"} + obj.response {"}
+"};
+    return(deliver);
+  }
   if (obj.status == 302) {
     set obj.http.location = obj.response;
     set obj.response = "Found";
@@ -194,4 +206,9 @@ an embedded player will have to suffice for now. Please let me know if this has 
     return(deliver);
   }
   #FASTLY error
+}
+
+sub vcl_deliver {
+  set resp.http.VCL-Version = req.vcl.version;
+  #FASTLY deliver
 }

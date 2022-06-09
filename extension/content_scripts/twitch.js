@@ -1,3 +1,4 @@
+// now is set by the background script
 (function() {
     try {
         var htmlVideoPlayer = document.getElementsByTagName('video')[0];
@@ -9,12 +10,10 @@
          * get rid of query string, since that can have a timing parameter (t) 
          */
         url.search = "";
-
-        var now = Math.round(Date.now() / 1000);
         /*
          * `zero` is the time the user would have to have hit play to get
          * to the current time in the video right now, if they hadn't scrubbed
-         * through the video at all.
+         * through the video at all. `now` is set by the background script.
          */
         var zero = now - Math.round(htmlVideoPlayer.currentTime);
 
