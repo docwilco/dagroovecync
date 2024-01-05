@@ -2,7 +2,10 @@
     try {
         var htmlAudioPlayer = document.getElementsByTagName('audio')[0];
 
-        var plainLink = document.querySelectorAll('[class^="PlayerControls__PlainLink"]')[0];
+        // Use an Attribute Selector to find this, because the class name has random ids in it
+        var playerContainer = document.querySelectorAll('[class*="PlayerContainer"]')[0];
+        var showDetails = playerContainer.querySelectorAll('[class*="ShowDetails"]')[0];
+        var plainLink = document.querySelectorAll('[class*="PlainLink"]')[0];
         if (plainLink === undefined) {
             throw new Error("unable to find plainLink");
         }

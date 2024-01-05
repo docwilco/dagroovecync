@@ -38,3 +38,9 @@ Throw everything under `extension` into zip file and change the extension from `
 # Credits
 
 Thanks Martijn Bogaard for the icons, motivation and ideas!
+
+# Changelog
+
+## 0.1.12 - 2024-12-05
+
+* Fix MixCloud support
