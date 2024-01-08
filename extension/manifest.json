@@ -1,12 +1,16 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "DaGrooveCync",
-    "version": "0.1.12",
+    "version": "1.0.0",
     "description": "Groove with your friends: sync up watching or listening to the same stuff on YouTube, Twitch, MixCloud, and SoundCloud.",
     "permissions": [
         "tabs",
+        "activeTab",
+        "scripting",
         "clipboardWrite",
-        "declarativeContent",
+        "declarativeContent"
+    ],
+    "host_permissions": [
         "https://*.youtube.com/watch*",
         "https://music.youtube.com/*",
         "https://*.twitch.tv/videos*",
@@ -18,6 +22,7 @@
         "128": "icons/dgc-128.png"
     },
     "background": {
+        "persistent": false,
         "scripts": [
             "browser-polyfill.js",
             "dagroovecync.js"

@@ -47,20 +47,11 @@ browser.pageAction.onClicked.addListener((tab) => {
     } else {
         throw new Error('internal error: unknown site');
     }
-    // Windows doesn't really do accurate clocks, so we need to snag the time first
-    fetch("https://dgc.drwil.co/v2/now")
-        .then(response => response.json())
-        .then((data) => browser.tabs.executeScript(tab.id, { code: `var now = ${data.now};` }))
-        .then(() => browser.tabs.executeScript(tab.id, { file: `/content_scripts/${file}` }))
-        .then(result => {
-            /*
-             * Since Chrome is unable to throw errors from the content script to here,
-             * the scripts just try/catch and return an appropriate string. Here we
-             * throw an error if the returned string was not "success" so .then() makes
-             * the right choice.
-             */
-            if (result[0] !== "success") {
-                throw new Error(result[0]);
+    browser.scripting.executeScript({ target: { tabId: tab.id }, files: [`/content_scripts/${file}`] })
+        .then(results => {
+            // results[0] is the result of the first script and we only have one script
+            if (results[0].error !== undefined) {
+                throw new Error(results[0].error);
             }
         })
         .then(setCopyIcon(tab.id), setFailedIcon(tab.id, file))
@@ -69,8 +60,8 @@ browser.pageAction.onClicked.addListener((tab) => {
 });
 
 if (chrome.declarativeContent !== undefined) {
-    chrome.runtime.onInstalled.addListener(function() {
-        chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+    chrome.runtime.onInstalled.addListener(function () {
+        chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
             chrome.declarativeContent.onPageChanged.addRules([{
                 conditions: [
                     new chrome.declarativeContent.PageStateMatcher({
