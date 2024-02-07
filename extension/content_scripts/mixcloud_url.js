@@ -9,7 +9,7 @@
     // Use an Attribute Selector to find this, because the class name has random ids in it
     let playerContainer = document.querySelectorAll('[class*="PlayerContainer"]')[0];
     let showDetails = playerContainer.querySelectorAll('[class*="ShowDetails"]')[0];
-    let plainLink = document.querySelectorAll('[class*="PlainLink"]')[0];
+    let plainLink = showDetails.querySelectorAll('[class*="PlainLink"]')[0];
     if (plainLink === undefined) {
         throw new Error("unable to find plainLink");
     }

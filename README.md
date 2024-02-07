@@ -41,6 +41,15 @@ Thanks Martijn Bogaard for the icons, motivation and ideas!
 
 # Changelog
 
-## 0.1.12 - 2024-12-05
+## 1.0.1 - 2024-01-25
+
+* Fix MixCloud bug
+
+## 1.0.0 2024-01-07
+
+* Update Browser Extension Polyfill
+* Update Manifest to V3
+
+## 0.1.12 - 2023-12-05
 
 * Fix MixCloud support

@@ -1,5 +1,4 @@
 (async function() {
-    throw new Error("testing!");
     // Windows doesn't really do accurate clocks, so we need to snag the time first
     let now = await fetch("https://dgc.drwil.co/v2/now")
         .then(response => response.json())
