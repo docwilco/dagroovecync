@@ -33,7 +33,7 @@ Downloud the latest source from https://github.com/docwilco/dagroovecync/release
 
 # Building
 
-Throw everything under `extension` into zip file and change the extension from `zip` to `xpi`.
+Throw everything under `extension` into zip file and change the extension from `zip` to `xpi`. For Chrome, check out the `chrome` branch.
 
 # Credits
 
@@ -41,15 +41,16 @@ Thanks Martijn Bogaard for the icons, motivation and ideas!
 
 # Changelog
 
-## 1.0.1 - 2024-01-25
+## 1.0.1-chrome 2024-02-07
 
-* Fix MixCloud bug
+* Adjust things to make Chrome happy
+* Fix MixCloud support for real this time
 
 ## 1.0.0 2024-01-07
 
 * Update Browser Extension Polyfill
 * Update Manifest to V3
 
-## 0.1.12 - 2023-12-05
+## 0.1.12 - 2024-01-05
 
 * Fix MixCloud support
