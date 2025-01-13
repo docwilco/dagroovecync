@@ -1,0 +1,203 @@
+<html>
+    <head>
+        <title>DaGrooveSync - MixCloud Workaround</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <style>
+  body {
+    background: #333;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+  }
+
+  h3 {
+    text-align: center;
+    font-size: 24px;
+    padding-top: 20px;
+    color: #fff;
+  }
+
+  p {
+    color: #ddd;
+    text-align: center;
+    font-size: 15px;
+  }
+
+  a {
+    color: #52e992;
+  }
+
+  #volume-control {
+    width: 350px;
+    height: 50px;
+    position: relative;
+    margin: 0 auto;
+    top: 10px;
+  }
+  #volume-control i {
+    position: absolute;
+    margin-top: -6px;
+    color: #666;
+  }
+  #volume-control i.fa-volume-down {
+    margin-left: -8px;
+  }
+  #volume-control i.fa-volume-up {
+    margin-right: -8px;
+    right: 0;
+  }
+
+  #volume {
+    position: absolute;
+    left: 24px;
+    margin: 0 auto;
+    height: 5px;
+    width: 300px;
+    background: #555;
+    border-radius: 15px;
+  }
+  #volume .ui-slider-range-min {
+    height: 5px;
+    width: 300px;
+    position: absolute;
+    background: #909090;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+  }
+  #volume .ui-slider-handle {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background: #fff;
+    position: absolute;
+    margin-left: -8px;
+    margin-top: -8px;
+    cursor: pointer;
+    outline: none;
+  }
+        </style>
+    </head>
+    <body>
+        <h3>DaGrooveCync workaround player</h3>
+        <p>
+            Since MixCloud does not have any way to link to mixes on their site with a start time, like YouTube does,
+an embedded player will have to suffice for now. Please let me know if this has changed!
+        </p>
+        <br>
+        <hr>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="https://kit.fontawesome.com/287885ebad.js" type="text/javascript"></script>
+        <script src="https://widget.mixcloud.com/media/js/widgetApi.js" type="text/javascript"></script>
+        <iframe
+            id="my-widget-iframe"
+            width="100%"
+            height="250"
+            src="https://www.mixcloud.com/widget/iframe/?autoplay=1&feed=%2FOliverHeldens%2Foliver-heldens-heldeep-radio-549%2F"
+            frameborder="0"
+            allow="autoplay"
+        ></iframe>
+        <!-- volume control based on https://codepen.io/emilcarlsson/pen/PPNLPy -->
+        <div id="volume-control">
+            <i class="fa fa-volume-down"></i>
+            <div id="volume"></div>
+            <i class="fa fa-volume-up"></i>
+        </div>
+        <hr>
+        <p id="autoplay-text">
+            Hit Play if Autoplay is blocked.
+        </p>
+        <p>
+            Don't worry, if Autoplay was blocked and you manually hit Play, the player should still seek to the correct time.
+        </p>
+        <p>
+            Remember to allow Autoplay if your browser has that capability.
+        </p>
+        <p>
+            For instance in Firefox, set Autoplay to "Allow Audio and Video". You can find this setting in the URL bar under the settings button next to the lock icon.
+        </p>
+        <p>
+            In Chrome just hit Play if it's not playing and after a couple of times of listening to music that way, Autoplay should start to work automatically.
+            Do not reload to speed this process up, as you need to listen for a while before this works.
+            See
+            <a href="https://developer.chrome.com/blog/autoplay">this blog from Google</a>
+            for more information.
+        </p>
+        <p>
+            If you have manually paused the player and you want to sync back up with your friend, just reload this page.
+        </p>
+        <script type="text/javascript">
+            function flashBackgroundWithFade(elementId, flashes, duration, flashColor) {
+                const element = document.getElementById(elementId);
+                if (!element) return;
+
+                const originalColor = window.getComputedStyle(element).backgroundColor;
+
+                // Create the keyframes dynamically
+                const animationName = `flashFade_${Date.now()}`;
+                const styleSheet = document.createElement('style');
+                styleSheet.type = 'text/css';
+                styleSheet.textContent = `
+                    @keyframes ${animationName} {
+                        0%, 100% { background-color: ${originalColor}; }
+                        50% { background-color: ${flashColor}; }
+                    }
+                `;
+                document.head.appendChild(styleSheet);
+
+                // Apply the animation to the element
+                element.style.animation = `${animationName} ${duration / 1000}s ease-in-out ${flashes}`;
+                
+                // Cleanup after the animation is done
+                const totalDuration = flashes * duration;
+                setTimeout(() => {
+                    element.style.animation = ''; // Remove the animation
+                    document.head.removeChild(styleSheet); // Clean up the dynamic style
+                }, totalDuration);
+            }
+
+            // We let the CDN calculate this, as it has an accurate clock, and
+            // the user might not. The CDN sets this in seconds.
+            let seek_time = 20;
+            // When autoplay is blocked, to resume at the right time after the
+            // user hits play, we need to know the offset between loading the page
+            // and when the user hits play. Then add to the seek time.
+            let load_time = Date.now();
+            let widget = Mixcloud.PlayerWidget(document.getElementById("my-widget-iframe"));
+            widget.ready.then(function() {
+                // Unlike SoundCloud, MixCloud does not emit a pause event if
+                // the page is blocked from autoplaying. So just always seek
+                // after Play is hit. For the blinking of the reminder to hit
+                // Play, check if the player is paused after a second or two.
+                function onPlay() {
+                    // Only seek on Play once
+                    widget.events.play.off(onPlay);
+                    // Calculate new seek time based on the time it took to hit
+                    // Play.
+                    seek_time += (Date.now() - load_time) / 1000;
+                    widget.seek(seek_time);
+                }
+                widget.events.play.on(onPlay);
+                widget.setVolume(0.5);
+                // Wait a second because paused is true immediately after ready,
+                // even if Autoplay is not blocked.
+                setTimeout(() => {
+                    widget.getIsPaused().then(paused => {
+                        if (paused) {
+                            flashBackgroundWithFade('autoplay-text', 3, 1000, '#52e992');
+                        }
+                    });
+                }, 1000);
+            });
+            $("#volume").slider({
+                min: 0,
+                max: 100,
+                value: 50,
+                    range: "min",
+                slide: function(event, ui) {
+                    widget.setVolume(ui.value / 100);
+                }
+            });
+        </script>
+    </body>
+</html>
