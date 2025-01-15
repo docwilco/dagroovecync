@@ -500,10 +500,11 @@ an embedded player will have to suffice for now. Please let me know if this has 
                     iframe.frameborder = 'no';
                     iframe.scrolling = 'no';
                     iframe.allow = 'autoplay';
-                    iframe.id = 'my-widget-iframe';
                     // Add the iframe to the player div
                     document.getElementById('player').appendChild(iframe);
-                    let widget = SC.Widget('my-widget-iframe');
+                    // Since we already have the iframe element, just pass that
+                    // in directly.
+                    let widget = SC.Widget(iframe);
                     // isPaused() doesn't work right off the bat to detect
                     // autoplay. It comes back false, even if autoplay is
                     // blocked by the browser. However it seems like PAUSE is
